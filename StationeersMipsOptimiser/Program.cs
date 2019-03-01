@@ -22,18 +22,18 @@ namespace StationeersMipsOptimiser
 
       private static string RemoveWhitespace(string file)
       {
-         List<string> lines = new List<string>(file.Split('\n', StringSplitOptions.None));
+         List<string> lines = new List<string>(file.Split(new char[1] { '\n' }, StringSplitOptions.None));
          for (int i = 0; i < lines.Count; i++)
          {
             lines[i] = lines[i].Trim();
          }
-         return string.Join('\n', lines);
+         return string.Join("\n", lines);
       }
 
       private static string RemoveAlias(string file)
       {
          Dictionary<string, string> aliasList = new Dictionary<string, string>();
-         List<string> lines = new List<string>(file.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+         List<string> lines = new List<string>(file.Split(new char[1] { '\n' }, StringSplitOptions.RemoveEmptyEntries));
          for (int i = 0; i < lines.Count; i++)
          {
             string line = lines[i].TrimStart();
@@ -48,7 +48,7 @@ namespace StationeersMipsOptimiser
                i--; // Changed offset.
             }
          }
-         file = string.Join('\n', lines);
+         file = string.Join("\n", lines);
          // Second pass
          foreach (var key in aliasList.Keys)
          {
@@ -60,7 +60,7 @@ namespace StationeersMipsOptimiser
       private static string RemoveJumpAlias(string file)
       {
          Dictionary<string, int> aliasList = new Dictionary<string, int>();
-         List<string> lines = new List<string>(file.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+         List<string> lines = new List<string>(file.Split(new char[1] { '\n' }, StringSplitOptions.RemoveEmptyEntries));
          for (int i = 0; i < lines.Count; i++)
          {
             string line = lines[i].TrimEnd();
@@ -75,7 +75,7 @@ namespace StationeersMipsOptimiser
                i--; // Changed offset.
             }
          }
-         file = string.Join('\n', lines);
+         file = string.Join("\n", lines);
          // Second pass
          foreach (var key in aliasList.Keys)
          {
@@ -87,23 +87,23 @@ namespace StationeersMipsOptimiser
       // Removes lines that provide no action
       private static string RemoveInactiveLines(string file)
       {
-         List<string> lines = new List<string>(file.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+         List<string> lines = new List<string>(file.Split(new char[1] { '\n' }, StringSplitOptions.RemoveEmptyEntries));
          for (int i = 0; i < lines.Count; i++)
          {
             string line = lines[i].TrimStart();
 
-            if (line.Length == 0 || line.StartsWith('#') || line.StartsWith('\r'))
+            if (line.Length == 0 || line.StartsWith("#") || line.StartsWith("\r"))
             {
                lines.RemoveAt(i);
                i--; // Removed line, Index shift.
             }
-            else if (line.Contains('#'))
+            else if (line.Contains("#"))
             {
-               lines[i] = line.Substring(0, line.IndexOf('#'));
+               lines[i] = line.Substring(0, line.IndexOf("#"));
             }
             lines[i] = lines[i].Replace("\r", "");
          }
-         return string.Join('\n', lines);
+         return string.Join("\n", lines);
       }
    }
 }
